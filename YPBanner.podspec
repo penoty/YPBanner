@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
     'YPBanner' => ['Pod/Assets/*.png']
   }
 
-  s.public_header_files = 'Pod/Classes/YPBanner/*'
+  s.public_header_files = 'Pod/Classes/YPBanner/YPBannerView.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SDWebImage', '~> 3.7.3'
 end
