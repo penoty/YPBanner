@@ -22,17 +22,17 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "penoty" => "penoty@163.com" }
   s.source           = { :git => "https://github.com/penoty/YPBanner.git", :tag => s.version.to_s }
-  s.social_media_url = 'weixin:penotydelpiero'
+#s.social_media_url = 'weixin:penotydelpiero'
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Pod/Classes/**/*'
+  s.source_files = 'Pod/Classes/YPBanner/*'
   s.resource_bundles = {
     'YPBanner' => ['Pod/Assets/*.png']
   }
 
-  s.public_header_files = 'Pod/Classes/YPBanner/YPBannerView.h'
+  s.public_header_files = 'Pod/Classes/YPBanner/*'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SDWebImage', '~> 3.7.3'
 end
