@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = "YPBanner"
   s.version          = "0.1.0"
-  s.summary          = "Just a few lines of codes, you can easily add a banner to your project."
+  s.summary          = "YPBanner,simple usage,esily add banner to your project."
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
