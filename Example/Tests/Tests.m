@@ -2,10 +2,9 @@
 //  YPBannerTests.m
 //  YPBannerTests
 //
-//  Created by yupao on 04/13/2016.
-//  Copyright (c) 2016 yupao. All rights reserved.
+//  Created by penoty on 04/13/2016.
+//  Copyright (c) 2016 penoty. All rights reserved.
 //
-
 @import XCTest;
 
 @interface Tests : XCTestCase

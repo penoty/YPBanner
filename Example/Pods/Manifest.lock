@@ -1,0 +1,20 @@
+PODS:
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - YPBanner (0.1.0):
+    - SDWebImage (~> 3.7.3)
+
+DEPENDENCIES:
+  - SDWebImage (~> 3.7.3)
+  - YPBanner (from `../`)
+
+EXTERNAL SOURCES:
+  YPBanner:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  YPBanner: b9928b9e7a37ac1621cb873ca350c1404795e7ed
+
+COCOAPODS: 0.39.0
