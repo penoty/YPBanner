@@ -3,7 +3,10 @@ Just a few lines of code, you can easily add banner to your app.
 ##Dependency
 SDWebImage
 ##How to install?
-YPBanner is available through [CocoaPods](http://cocoapods.org). To install it, simply add the following line to your Podfile:pod YPBanner
+        //support pod install,just do:
+        pod 'YPBanner' 
+        //if the repo is not updated,please try:
+        pod "YPBanner", :git =>"https://github.com/penoty/YPBanner"
 ##How to use?
         =======YPBannerView=======
         //Banner item init
