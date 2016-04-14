@@ -4,6 +4,7 @@ use_frameworks!
 target 'YPBanner_Example', :exclusive => true do
   pod 'YPBanner', :path => '../'
   pod 'SDWebImage', '~> 3.7.3'
+  pod 'Masonry'
 end
 
 target 'YPBanner_Tests', :exclusive => true do

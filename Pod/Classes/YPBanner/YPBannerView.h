@@ -33,4 +33,6 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
                 YPBannerItems:(NSArray<YPBannerItem *> *)itemArray
                 animationType:(YPBannerAnimationType)type
               andTimeDuration:(NSTimeInterval)duration;
+- (void)addBannerItems:(NSArray<YPBannerItem *> *)itemArray;
+- (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 @end

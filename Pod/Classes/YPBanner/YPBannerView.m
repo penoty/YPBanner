@@ -72,6 +72,17 @@
     return self;
 }
 
+- (void)addBannerItems:(NSArray<YPBannerItem *> *)itemArray {
+    [_bannerManager addItems:itemArray];
+    [self ajustImageIndex];
+}
+
+- (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray {
+    [_bannerManager removeAllItems];
+    [_bannerManager addItems:itemArray];
+    [self ajustImageIndex];
+}
+
 #pragma mark - subview init methods
 - (void)initBannerView {
     _bannerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
@@ -125,6 +136,7 @@
     [self initGestureView];
     [self initPageControl];
     [self initBannerTimer];
+    [self ajustImageIndex];
 }
 
 #pragma mark - NSTimer related

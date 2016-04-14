@@ -84,10 +84,12 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "Pods-YPBanner_Example/Masonry.framework"
   install_framework "Pods-YPBanner_Example/SDWebImage.framework"
   install_framework "Pods-YPBanner_Example/YPBanner.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "Pods-YPBanner_Example/Masonry.framework"
   install_framework "Pods-YPBanner_Example/SDWebImage.framework"
   install_framework "Pods-YPBanner_Example/YPBanner.framework"
 fi
