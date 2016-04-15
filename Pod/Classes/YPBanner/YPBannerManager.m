@@ -53,7 +53,9 @@
         [_imageManager downloadImageWithURL:[NSURL URLWithString:item.itemImgUrl] options:SDWebImageCacheMemoryOnly progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            item.itemImg = image;
+            if (image) {
+                item.itemImg = image;
+            }
         }];
     }
 }
