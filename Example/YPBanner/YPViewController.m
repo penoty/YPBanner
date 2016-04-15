@@ -25,11 +25,11 @@
     [self initFuncBtns];
 }
 
-- (void)initBannerView {
+- (void)initBannerView {    
     CGRect frame = self.view.bounds;
-    YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:[UIImage imageNamed:@"placehold.png"] data:nil];
-    YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"http://img2.3lian.com/img2007/19/33/005.jpg" data:nil andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
-    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
+    YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:PLACEHOLDER data:nil];
+    YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"http://img2.3lian.com/img2007/19/33/005.jpg" data:nil andPlaceholder:PLACEHOLDER];
+    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:PLACEHOLDER];
     //不设置动画，使用默认动画
     CGRect bannerFrame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height*0.5);
     _bannerView = [[YPBannerView alloc] initWithFrame:bannerFrame andYPBannerItems:@[item_01,item_02,item_03]];
@@ -76,12 +76,12 @@
 }
 
 - (void)addItemToBanner:(UIButton *)sender {
-    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
+    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:PLACEHOLDER];
     [_bannerView addBannerItems:@[item_03]];
 }
 
 - (void)resetItemToBanner:(UIButton *)sender {
-    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
+    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:PLACEHOLDER];
     [_bannerView resetBannerItems:@[item_03]];
 }
 

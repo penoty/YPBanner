@@ -3,7 +3,7 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
-  - YPBanner (0.1.0):
+  - YPBanner (0.3.0):
     - SDWebImage (~> 3.7.3)
 
 DEPENDENCIES:
@@ -18,6 +18,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  YPBanner: 98f98cbbac202cc8ec7cdbae2077c8326f4b25c0
+  YPBanner: 039e3ea0e62e83d0813cde6ba9f67c235bb91817
 
 COCOAPODS: 0.39.0

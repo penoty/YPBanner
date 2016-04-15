@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "YPBannerManager.h"
+#define PLACEHOLDER [UIImage imageWithContentsOfFile:\
+                                [[NSBundle bundleWithURL:[[NSBundle bundleForClass:[YPBannerView classForCoder]] URLForResource:@"YPBanner" withExtension:@"bundle"]]\
+                                 pathForResource:@"placeholder" ofType:@"jpg"]\
+                    ]
+
 typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
     YPBannerAnimationTypeFade = 0,
     YPBannerAnimationTypeMoveIn,
@@ -27,6 +32,8 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
 
 @interface YPBannerView : UIView <YPBannerManagerDelegate>
 @property (nonatomic, weak) id<YPBannerViewDelegate> delegate;
+@property (nonatomic, assign) CGFloat scrollTimeInterval;
+@property (nonatomic, strong) UIImage *placeholderImg;
 - (instancetype)initWithFrame:(CGRect)frame
              andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (instancetype)initWithFrame:(CGRect)frame

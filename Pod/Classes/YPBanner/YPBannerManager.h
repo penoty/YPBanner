@@ -14,15 +14,16 @@
 - (void)YPBannerManager:(YPBannerManager *)manager addItem:(YPBannerItem *)item;
 @optional
 - (void)YPBannerManager:(YPBannerManager *)manager deleteItem:(YPBannerItem *)item;
-- (void)YPBannerManager:(YPBannerManager *)manager removeAllItemsWithPlacehold:(UIImage *)placehold;
+- (void)YPBannerManager:(YPBannerManager *)manager removeAllItemsWithPlaceholdItem:(BOOL)flag;
 @end
 
 @interface YPBannerManager : NSObject
 @property (nonatomic, weak) id<YPBannerManagerDelegate> delegate;
 @property (nonatomic, assign) NSInteger countOfItems;
+@property (nonatomic, strong) UIImage *placeholderImg;
 - (void)addItem:(YPBannerItem *)item;
 - (void)addItems:(NSArray <YPBannerItem *> *)itemArray;
 - (void)deleteItem:(YPBannerItem *)item;
-- (void)removeAllItems;
+- (void)removeAllItemsWithPlaceholderItem:(BOOL)flag;
 - (YPBannerItem *)itemAtIndex:(NSInteger)index;
 @end

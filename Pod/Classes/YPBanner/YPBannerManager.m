@@ -75,11 +75,11 @@
     }
 }
 
-- (void)removeAllItems {
+- (void)removeAllItemsWithPlaceholderItem:(BOOL)flag {
     [_itemQueue removeAllObjects];
     _countOfItems = _itemQueue.count;
-    if (_delegate && [_delegate respondsToSelector:@selector(YPBannerManager:removeAllItemsWithPlacehold:)]) {
-        [_delegate YPBannerManager:self removeAllItemsWithPlacehold:[UIImage imageNamed:@"placehold.png"]];
+    if (_delegate && [_delegate respondsToSelector:@selector(YPBannerManager:removeAllItemsWithPlaceholdItem:)]) {
+        [_delegate YPBannerManager:self removeAllItemsWithPlaceholdItem:flag];
     }
 }
 

@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
 @interface YPBannerItem : NSObject
-
 @property (nonatomic, assign) NSInteger itemIndex;
 @property (nonatomic, strong, readonly) NSString *itemImgUrl;
 @property (nonatomic, strong) UIImage *itemImg;

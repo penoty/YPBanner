@@ -39,9 +39,12 @@
         animationTypeArray = @[kCATransitionFade,kCATransitionMoveIn,kCATransitionPush,kCATransitionReveal  //公开动画
                                ,@"cube",@"oglFlip",@"suckEffect",@"rippleEffect",@"pageCurl",@"pageUnCurl"  //私有动画
                                ];
-        
         _bannerManager = [[YPBannerManager alloc] init];
         [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
+        [self initBannerView];
+        [self initGestureView];
+        [self initPageControl];
+        [self initBannerTimer];
     }
     return self;
 }
@@ -78,7 +81,7 @@
 }
 
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray {
-    [_bannerManager removeAllItems];
+    [_bannerManager removeAllItemsWithPlaceholderItem:NO];
     [_bannerManager addItems:itemArray];
     [self ajustImageIndex];
 }
@@ -132,11 +135,19 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self initBannerView];
-    [self initGestureView];
-    [self initPageControl];
-    [self initBannerTimer];
+    [_bannerView setFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
+    [_leftImageView setFrame:CGRectMake(LEFT_IMAGE_ORGIN.x, LEFT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
+    [_centerImageView setFrame:CGRectMake(CENTER_IMAGE_ORGIN.x, CENTER_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
+    [_rightImageView setFrame:CGRectMake(RIGHT_IMAGE_ORGIN.x, RIGHT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
+    [_gestureView setFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
+    [_pageControl setFrame:CGRectMake(VIEW_WIDTH/2.0f-20, VIEW_HEIGHT-20.f, 40, 20)];
     [self ajustImageIndex];
+}
+
+#pragma mark - setter and getter
+- (void)setPlaceholderImg:(UIImage *)placeholderImg {
+    _placeholderImg = placeholderImg;
+    [_bannerManager setPlaceholderImg:placeholderImg];
 }
 
 #pragma mark - NSTimer related
@@ -165,6 +176,7 @@
     NSInteger centerIndex= _centerImageIndex;
     NSInteger leftIndex= (centerIndex == 0)?((countOfItems-1)):(centerIndex-1);
     NSInteger rightIndex= (centerIndex == countOfItems-1)?(0):(centerIndex+1)%(countOfItems);
+    _pageControl.currentPage = centerIndex;
     _leftImageView.image = [_bannerManager itemAtIndex:leftIndex].itemImg;
     _centerImageView.image = [_bannerManager itemAtIndex:centerIndex].itemImg;
     _rightImageView.image = [_bannerManager itemAtIndex:rightIndex].itemImg;
@@ -237,6 +249,7 @@
     [_pageControl setNumberOfPages:manager.countOfItems];
     _centerImageIndex = 0;
 }
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

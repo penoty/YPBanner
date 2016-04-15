@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "YPBanner"
-  s.version          = "0.2.0"
+  s.version          = "0.3.0"
   s.summary          = "YPBanner,simple usage,esily add banner to your project."
 
 # This description is used to generate tags and improve search results.
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes/YPBanner/*'
   s.resource_bundles = {
-    'YPBanner' => ['Pod/Assets/*.png']
+    'YPBanner' => ['Pod/Assets/images/*']
   }
 
   s.public_header_files = 'Pod/Classes/YPBanner/*.h'
