@@ -39,6 +39,7 @@
         animationTypeArray = @[kCATransitionFade,kCATransitionMoveIn,kCATransitionPush,kCATransitionReveal  //公开动画
                                ,@"cube",@"oglFlip",@"suckEffect",@"rippleEffect",@"pageCurl",@"pageUnCurl"  //私有动画
                                ];
+        _scrollTimeInterval = TIMERINTERVAL;
         _bannerManager = [[YPBannerManager alloc] init];
         [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
         [self initBannerView];
@@ -152,7 +153,7 @@
 
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
-    _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:TIMERINTERVAL
+    _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
                                                     target:self
                                                   selector:@selector(timeUp)
                                                   userInfo:nil
