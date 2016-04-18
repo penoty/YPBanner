@@ -22,23 +22,33 @@ SDWebImage
                                             andAnimationDuration:1.5f];
 ###setup frame
         //you can setup frame any where you want by using setFrame or masonry
-                //use setFrame:
-                [_bannerView setFrame:...];
-                //use Masonry
-                [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        //use setFrame:
+        [_bannerView setFrame:...];
+        //use Masonry
+        [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make...
-                 }];
+         }];
 ###setup frame when init
-                - (instancetype)initWithFrame:(CGRect)frame
-                             andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
-                - (instancetype)initWithFrame:(CGRect)frame
-                                YPBannerItems:(NSArray<YPBannerItem *> *)itemArray
-                                animationType:(YPBannerAnimationType)type
-                         andAnimationDuration:(NSTimeInterval)duration;
+        - (instancetype)initWithFrame:(CGRect)frame
+                     andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
+        - (instancetype)initWithFrame:(CGRect)frame
+                        YPBannerItems:(NSArray<YPBannerItem *> *)itemArray                                animationType:(YPBannerAnimationType)type
+                 andAnimationDuration:(NSTimeInterval)duration;
 
 ###YPBannerViewDelegate
         //If you want to have tap callback,just implement the YPBannerViewDelegate method:
         - (void)didTapOnBannerItem:(YPBannerItem *)item;
+###public properties
+####scrollTimeInterval
+        (type:CGFloat)time interval that banner automatically scroll
+####placeholderImg
+        (type:UIImage *)the banner placeholder image 
+####pageIndicatorTintColor
+        (type:UIColor)pagecontrol's indicator color
+####currentPageIndicatorColor
+        (type:UIColor)pagecontrol's current indicator color
+####using the method to setup the pagecontrol
+        - (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
 ## Author
 penoty, penoty@163.com
 ## License
