@@ -22,13 +22,20 @@ SDWebImage
                                                    animationType:YPBannerAnimationTypeCube 
                                             andAnimationDuration:1.5f];
         //you can setup the frame any time you want with setFrame or Masonry
-        //use setFrame:
-        [_bannerView setFrame:...];
-        //use Masonry
-        [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make...
-        }];
+                //use setFrame:
+                [_bannerView setFrame:...];
+                //use Masonry
+                [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make...
+                 }];
         //Or you can setup frame when init,by using initWithFrame... methods
+                - (instancetype)initWithFrame:(CGRect)frame
+                             andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
+                - (instancetype)initWithFrame:(CGRect)frame
+                                YPBannerItems:(NSArray<YPBannerItem *> *)itemArray
+                                animationType:(YPBannerAnimationType)type
+                         andAnimationDuration:(NSTimeInterval)duration;
+
         =======YPBannerViewDelegate=======
         //If you want to have tap callback,just implement the YPBannerViewDelegate method:
         - (void)didTapOnBannerItem:(YPBannerItem *)item;
