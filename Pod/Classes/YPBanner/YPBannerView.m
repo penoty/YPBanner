@@ -33,6 +33,7 @@
 @end
 @implementation YPBannerView
 #pragma mark - init methods
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -40,12 +41,42 @@
                                ,@"cube",@"oglFlip",@"suckEffect",@"rippleEffect",@"pageCurl",@"pageUnCurl"  //私有动画
                                ];
         _scrollTimeInterval = TIMERINTERVAL;
-        _bannerManager = [[YPBannerManager alloc] init];
-        [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
+        if (!_bannerManager) {
+            _bannerManager = [[YPBannerManager alloc] init];
+            [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
+        }
         [self initBannerView];
         [self initGestureView];
         [self initPageControl];
         [self initBannerTimer];
+    }
+    return self;
+}
+
+- (instancetype)initWithYPBannerItems:(NSArray<YPBannerItem *> *)itemArray {
+    self = [super init];
+    if (self) {
+        if (!_bannerManager) {
+            _bannerManager = [[YPBannerManager alloc] init];
+            [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
+        }
+        [_bannerManager addItems:(NSArray<YPBannerItem *> *)itemArray];
+        _centerImageIndex = 0;
+        _bannerAnimation = [self createDefaultAnimation];
+    }
+    return self;
+}
+
+- (instancetype)initWithYPBannerItems:(NSArray<YPBannerItem *> *)itemArray
+                        animationType:(YPBannerAnimationType)type
+                 andAnimationDuration:(NSTimeInterval)duration {
+    self = [self initWithYPBannerItems:itemArray];
+    if (self) {
+        _bannerAnimation = [self createAnimationByType:type
+                                        beginDirection:kCATransitionFromLeft
+                                        timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
+                                  andAnimationDuration:duration
+                            ];
     }
     return self;
 }
@@ -64,13 +95,13 @@
 - (instancetype)initWithFrame:(CGRect)frame
                 YPBannerItems:(NSArray<YPBannerItem *> *)itemArray
                 animationType:(YPBannerAnimationType)type
-              andTimeDuration:(NSTimeInterval)duration {
+         andAnimationDuration:(NSTimeInterval)duration {
     self = [self initWithFrame:(CGRect)frame andYPBannerItems:itemArray];
     if (self) {
         _bannerAnimation = [self createAnimationByType:type
                                         beginDirection:kCATransitionFromLeft
                                         timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
-                                       andTimeDuration:duration
+                                  andAnimationDuration:duration
                             ];
     }
     return self;
@@ -151,6 +182,13 @@
     [_bannerManager setPlaceholderImg:placeholderImg];
 }
 
+- (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor {
+    _pageIndicatorTintColor = indicatorColor;
+    _currentPageIndicatorColor = currentIndicatorColor;
+    [_pageControl setPageIndicatorTintColor:_pageIndicatorTintColor];
+    [_pageControl setCurrentPageIndicatorTintColor:_currentPageIndicatorColor];
+}
+
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
     _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
@@ -195,7 +233,7 @@
 - (CATransition *)createAnimationByType:(YPBannerAnimationType)type
                          beginDirection:(NSString *)direction
                          timingFunction:(CAMediaTimingFunction *)function
-                        andTimeDuration:(NSTimeInterval)duration {
+                   andAnimationDuration:(NSTimeInterval)duration {
     CATransition *transition = [CATransition animation];
     transition.duration = duration;
     transition.subtype = direction;
@@ -208,7 +246,7 @@
     CATransition * transition = [self createAnimationByType:YPBannerAnimationTypePush
                                              beginDirection:kCATransitionFromLeft
                                              timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
-                                            andTimeDuration:0.7f];
+                                       andAnimationDuration:0.7f];
     return transition;
 }
 

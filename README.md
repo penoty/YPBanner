@@ -12,16 +12,23 @@ SDWebImage
         //Banner item init
         YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:[UIImage imageNamed:@"placehold.png"] data:nil];
         YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"web_url" 
-                                                              data:nil 
-                                                    andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
+                                                             data:nil 
+                                                   andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
         ......
         //default animation
-        _bannerView = [[YPBannerView alloc] initWithFrame:parentView.bounds andYPBannerItems:@[item_01,item_02...]];     
+        _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02...]];     
         //set animation type and duration
-        _bannerView= [[YPBannerView alloc] initWithFrame:parentView.bounds 
-                                                YPBannerItems:@[item_01,item_02...] 
-                                                animationType:YPBannerAnimationTypeCube 
-                                                andTimeDuration:1.5f];
+        _bannerView= [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02...] 
+                                                   animationType:YPBannerAnimationTypeCube 
+                                            andAnimationDuration:1.5f];
+        //you can setup the frame any time you want with setFrame or Masonry
+        //use setFrame:
+        [_bannerView setFrame:...];
+        //use Masonry
+        [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make...
+        }];
+        //Or you can setup frame when init,by using initWithFrame... methods
         =======YPBannerViewDelegate=======
         //If you want to have tap callback,just implement the YPBannerViewDelegate method:
         - (void)didTapOnBannerItem:(YPBannerItem *)item;

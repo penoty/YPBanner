@@ -12,6 +12,7 @@
     "git": "https://github.com/penoty/YPBanner.git",
     "tag": "0.3.0"
   },
+  "social_media_url": "http://twitter.com/PenotyYu",
   "platforms": {
     "ios": "7.0"
   },

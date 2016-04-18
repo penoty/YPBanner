@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "YPBanner"
-  s.version          = "0.3.0"
+  s.version          = "0.4.0"
   s.summary          = "YPBanner,simple usage,esily add banner to your project."
 
 # This description is used to generate tags and improve search results.
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.license          = 'MIT'
   s.author           = { "penoty" => "penoty@163.com" }
   s.source           = { :git => "https://github.com/penoty/YPBanner.git", :tag => s.version.to_s }
-#s.social_media_url = 'weixin:penotydelpiero'
+  s.social_media_url = 'http://twitter.com/PenotyYu'
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true

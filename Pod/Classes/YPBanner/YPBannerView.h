@@ -34,12 +34,22 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
 @property (nonatomic, weak) id<YPBannerViewDelegate> delegate;
 @property (nonatomic, assign) CGFloat scrollTimeInterval;
 @property (nonatomic, strong) UIImage *placeholderImg;
+@property (nonatomic, strong) UIColor *pageIndicatorTintColor;
+@property (nonatomic, strong) UIColor *currentPageIndicatorColor;
+//init methods without initFrame
+- (instancetype)initWithYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
+- (instancetype)initWithYPBannerItems:(NSArray<YPBannerItem *> *)itemArray
+                        animationType:(YPBannerAnimationType)type
+                 andAnimationDuration:(NSTimeInterval)duration;
+//init methods with initFrame
 - (instancetype)initWithFrame:(CGRect)frame
              andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (instancetype)initWithFrame:(CGRect)frame
                 YPBannerItems:(NSArray<YPBannerItem *> *)itemArray
                 animationType:(YPBannerAnimationType)type
-              andTimeDuration:(NSTimeInterval)duration;
+         andAnimationDuration:(NSTimeInterval)duration;
+
 - (void)addBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray;
+- (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
 @end

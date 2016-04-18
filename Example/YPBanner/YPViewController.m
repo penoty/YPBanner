@@ -21,22 +21,67 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    [self initBannerView];
+//    [self initBannerViewWithFrame];
+    [self initBannerViewWithMasonry];
     [self initFuncBtns];
 }
 
-- (void)initBannerView {    
+- (void)initBannerViewWithFrame {
     CGRect frame = self.view.bounds;
     YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:PLACEHOLDER data:nil];
-    YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"http://img2.3lian.com/img2007/19/33/005.jpg" data:nil andPlaceholder:PLACEHOLDER];
-    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg" data:nil andPlaceholder:PLACEHOLDER];
-    //不设置动画，使用默认动画
+    YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"http://img2.3lian.com/img2007/19/33/005.jpg"
+                                                         data:nil
+                                               andPlaceholder:PLACEHOLDER];
+    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg"
+                                                         data:nil
+                                               andPlaceholder:PLACEHOLDER];
+    
+    //YPBannerView init method
+    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]];
+    //YPBannerView init method with animation setting
+//    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]
+//                                                animationType:YPBannerAnimationTypeCube
+//                                              andTimeDuration:1.5f];
+    
+    
+/****************************************
+    //set frame when init
     CGRect bannerFrame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height*0.5);
     _bannerView = [[YPBannerView alloc] initWithFrame:bannerFrame andYPBannerItems:@[item_01,item_02,item_03]];
-    //设置动画
-    //    _bannerView= [[YPBannerView alloc] initWithFrame:_frameView.bounds YPBannerItems:@[item_01,item_02,item_03] animationType:YPBannerAnimationTypePageCurl andTimeDuration:1.5f];
+    _bannerView= [[YPBannerView alloc] initWithFrame:_frameView.bounds YPBannerItems:@[item_01,item_02,item_03] animationType:YPBannerAnimationTypePageCurl andTimeDuration:1.5f];
+ ***************************************/
+    
     [self.view addSubview:_bannerView];
     [_bannerView setDelegate:(id<YPBannerViewDelegate> _Nullable)self];
+
+    //use frame
+    [_bannerView setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height*0.5)];
+}
+
+- (void)initBannerViewWithMasonry {
+    YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:PLACEHOLDER data:nil];
+    YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"http://img2.3lian.com/img2007/19/33/005.jpg"
+                                                         data:nil
+                                               andPlaceholder:PLACEHOLDER];
+    YPBannerItem *item_03 = [[YPBannerItem alloc] initWithUrl:@"http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg"
+                                                         data:nil
+                                               andPlaceholder:PLACEHOLDER];
+    
+    //YPBannerView init method
+    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]];
+    //YPBannerView init method with animation setting
+    //    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]
+    //                                                animationType:YPBannerAnimationTypeCube
+    //                                              andTimeDuration:1.5f];
+    
+    [self.view addSubview:_bannerView];
+    [_bannerView setDelegate:(id<YPBannerViewDelegate> _Nullable)self];
+    
+    //use masonry
+    [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.and.right.equalTo(self.view);
+        make.height.mas_equalTo(200);
+    }];
 }
 
 - (void)initFuncBtns {
