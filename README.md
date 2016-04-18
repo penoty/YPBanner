@@ -7,7 +7,7 @@ SDWebImage
         pod 'YPBanner' 
         //if the repo is not updated,please try:
         pod "YPBanner", :git =>"https://github.com/penoty/YPBanner"
-##How to use?
+##How to use?(need import "YPBannerView.h")
 ###Banner Item Init
         YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:[UIImage imageNamed:@"placehold.png"] data:nil];
         YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"web_url" 
