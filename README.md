@@ -32,13 +32,14 @@ SDWebImage
         - (instancetype)initWithFrame:(CGRect)frame
                      andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
         - (instancetype)initWithFrame:(CGRect)frame
-                        YPBannerItems:(NSArray<YPBannerItem *> *)itemArray                                animationType:(YPBannerAnimationType)type
+                        YPBannerItems:(NSArray<YPBannerItem *> *)itemArray      
+                        animationType:(YPBannerAnimationType)type
                  andAnimationDuration:(NSTimeInterval)duration;
 
 ###YPBannerViewDelegate
         //If you want to have tap callback,just implement the YPBannerViewDelegate method:
         - (void)didTapOnBannerItem:(YPBannerItem *)item;
-###public properties
+###Public Properties
 ####scrollTimeInterval
         (type:CGFloat)time interval that banner automatically scroll
 ####placeholderImg
