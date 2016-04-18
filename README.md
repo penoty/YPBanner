@@ -49,7 +49,8 @@ SDWebImage
 #####currentPageIndicatorColor
         (type:UIColor)pagecontrol's current indicator color
 #####using the method to setup the pagecontrol
-        - (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
+        - (void)setPageIndicatorColor:(UIColor *)indicatorColor 
+         andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
 ## Author
 penoty, penoty@163.com
 ## License
