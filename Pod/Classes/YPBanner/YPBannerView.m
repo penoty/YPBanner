@@ -189,6 +189,11 @@
     [_pageControl setCurrentPageIndicatorTintColor:_currentPageIndicatorColor];
 }
 
+- (void)setScrollTimeInterval:(CGFloat)scrollTimeInterval {
+    _scrollTimeInterval = scrollTimeInterval;
+    [self resumeTimer];
+}
+
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
     _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
@@ -203,7 +208,7 @@
 }
 
 - (void)resumeTimer {
-    [_bannerTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:TIMERINTERVAL]];
+    [_bannerTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:_scrollTimeInterval]];
 }
 
 - (void)timeUp {

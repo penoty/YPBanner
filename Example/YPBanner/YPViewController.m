@@ -73,6 +73,8 @@
     //    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]
     //                                                animationType:YPBannerAnimationTypeCube
     //                                              andTimeDuration:1.5f];
+    [_bannerView setScrollTimeInterval:2.0f];
+    [_bannerView setPageIndicatorColor:[UIColor blackColor] andCurrentPageIndicatorColor:[UIColor whiteColor]];
     
     [self.view addSubview:_bannerView];
     [_bannerView setDelegate:(id<YPBannerViewDelegate> _Nullable)self];
