@@ -51,7 +51,7 @@ SDWebImage
 #####using the method to setup the pagecontrol
         - (void)setPageIndicatorColor:(UIColor *)indicatorColor 
          andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
-####using the method to setup animation type and duration
+#####using the method to setup animation type and duration
         - (void)setAnimationType:(YPBannerAnimationType)animationType
          andAnimationDuration:(NSTimeInterval)animationDuration;
 ## Author
