@@ -1,14 +1,14 @@
 PODS:
   - Masonry (0.6.4)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
-  - YPBanner (0.4.0):
-    - SDWebImage (~> 3.7.3)
+  - SDWebImage (3.8.1):
+    - SDWebImage/Core (= 3.8.1)
+  - SDWebImage/Core (3.8.1)
+  - YPBanner (0.5.0):
+    - SDWebImage (~> 3.8.1)
 
 DEPENDENCIES:
   - Masonry
-  - SDWebImage (~> 3.7.3)
+  - SDWebImage (~> 3.8.1)
   - YPBanner (from `../`)
 
 EXTERNAL SOURCES:
@@ -17,7 +17,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  YPBanner: f03321547e21e2b775c3bb4286317108b2d472b4
+  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  YPBanner: 6e382c0786226be3b7dc9d2477eed884563072f1
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 2f72044aec5ec6571cb73b92eb24c38b7cdf3af4
+
+COCOAPODS: 1.0.1

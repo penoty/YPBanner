@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "YPBanner"
-  s.version          = "0.4.0"
+  s.version          = "0.5.0"
   s.summary          = "YPBanner,simple usage,esily add banner to your project."
 
 # This description is used to generate tags and improve search results.
@@ -34,5 +34,5 @@ Pod::Spec.new do |s|
 
   s.public_header_files = 'Pod/Classes/YPBanner/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'SDWebImage', '~> 3.7.3'
+  s.dependency 'SDWebImage', '~> 3.8.1'
 end

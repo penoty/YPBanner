@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "YPBannerManager.h"
-#define PLACEHOLDER [UIImage imageWithContentsOfFile:\
-                                [[NSBundle bundleWithURL:[[NSBundle bundleForClass:[YPBannerView classForCoder]] URLForResource:@"YPBanner" withExtension:@"bundle"]]\
-                                 pathForResource:@"placeholder" ofType:@"jpg"]\
-                    ]
 
 typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
     YPBannerAnimationTypeFade = 0,
@@ -52,4 +48,5 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
 - (void)addBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
+- (void)setAnimationType:(YPBannerAnimationType)animationType andAnimationDuration:(NSTimeInterval)animationDuration;
 @end

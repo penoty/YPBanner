@@ -7,6 +7,7 @@
 //
 #import "YPViewController.h"
 #import "Masonry.h"
+#define PLACEHOLDER [UIImage imageNamed:@"placeholder.jpg"]
 
 @interface YPViewController ()
 @property (nonatomic, strong) YPBannerView *bannerView;
@@ -21,7 +22,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor whiteColor]];
-//    [self initBannerViewWithFrame];
+    //[self initBannerViewWithFrame];
     [self initBannerViewWithMasonry];
     [self initFuncBtns];
 }
@@ -39,18 +40,13 @@
     //YPBannerView init method
     _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]];
     //YPBannerView init method with animation setting
-//    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]
-//                                                animationType:YPBannerAnimationTypeCube
-//                                              andTimeDuration:1.5f];
-    
-    
-/****************************************
-    //set frame when init
-    CGRect bannerFrame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height*0.5);
-    _bannerView = [[YPBannerView alloc] initWithFrame:bannerFrame andYPBannerItems:@[item_01,item_02,item_03]];
-    _bannerView= [[YPBannerView alloc] initWithFrame:_frameView.bounds YPBannerItems:@[item_01,item_02,item_03] animationType:YPBannerAnimationTypePageCurl andTimeDuration:1.5f];
- ***************************************/
-    
+    //    _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02,item_03]
+    //                                                animationType:YPBannerAnimationTypeCube
+    //                                              andTimeDuration:1.5f];
+    [_bannerView setScrollTimeInterval:2.0f];
+    [_bannerView setPageIndicatorColor:[UIColor blackColor] andCurrentPageIndicatorColor:[UIColor whiteColor]];
+    //set the animation type and duration
+    //[_bannerView setAnimationType:YPBannerAnimationTypeCube andAnimationDuration:0.7f];
     [self.view addSubview:_bannerView];
     [_bannerView setDelegate:(id<YPBannerViewDelegate> _Nullable)self];
 
@@ -75,6 +71,8 @@
     //                                              andTimeDuration:1.5f];
     [_bannerView setScrollTimeInterval:2.0f];
     [_bannerView setPageIndicatorColor:[UIColor blackColor] andCurrentPageIndicatorColor:[UIColor whiteColor]];
+    //set the animation type and duration
+    //[_bannerView setAnimationType:YPBannerAnimationTypeCube andAnimationDuration:0.7f];
     
     [self.view addSubview:_bannerView];
     [_bannerView setDelegate:(id<YPBannerViewDelegate> _Nullable)self];

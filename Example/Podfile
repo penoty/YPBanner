@@ -1,13 +1,17 @@
 source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '7.0'
+
+xcodeproj 'YPBanner'
 use_frameworks!
 
-target 'YPBanner_Example', :exclusive => true do
+target 'YPBanner_Example' do
   pod 'YPBanner', :path => '../'
-  pod 'SDWebImage', '~> 3.7.3'
+  pod 'SDWebImage', '~> 3.8.1'
   pod 'Masonry'
 end
 
-target 'YPBanner_Tests', :exclusive => true do
+target 'YPBanner_Tests' do
   pod 'YPBanner', :path => '../'
-  pod 'SDWebImage', '~> 3.7.3'
+  pod 'SDWebImage', '~> 3.8.1'
 end

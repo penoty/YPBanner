@@ -110,12 +110,12 @@
 - (void)addBannerItems:(NSArray<YPBannerItem *> *)itemArray {
     [_bannerManager addItems:itemArray];
     [self ajustImageIndex];
+    [self resumeTimer];
 }
 
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray {
     [_bannerManager removeAllItemsWithPlaceholderItem:NO];
-    [_bannerManager addItems:itemArray];
-    [self ajustImageIndex];
+    [self addBannerItems:itemArray];
 }
 
 #pragma mark - subview init methods
@@ -194,6 +194,12 @@
     [self resumeTimer];
 }
 
+- (void)setAnimationType:(YPBannerAnimationType)animationType andAnimationDuration:(NSTimeInterval)animationDuration {
+    _bannerAnimation = [self createAnimationByType:animationType
+                                    beginDirection:kCATransitionFromLeft
+                                    timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
+                              andAnimationDuration:animationDuration];
+}
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
     _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
@@ -217,13 +223,23 @@
 
 - (void)ajustImageIndex {
     NSInteger countOfItems = _bannerManager.countOfItems;
-    NSInteger centerIndex= _centerImageIndex;
-    NSInteger leftIndex= (centerIndex == 0)?((countOfItems-1)):(centerIndex-1);
-    NSInteger rightIndex= (centerIndex == countOfItems-1)?(0):(centerIndex+1)%(countOfItems);
-    _pageControl.currentPage = centerIndex;
-    _leftImageView.image = [_bannerManager itemAtIndex:leftIndex].itemImg;
-    _centerImageView.image = [_bannerManager itemAtIndex:centerIndex].itemImg;
-    _rightImageView.image = [_bannerManager itemAtIndex:rightIndex].itemImg;
+    if (countOfItems > 0) {
+        NSInteger centerIndex= _centerImageIndex;
+        NSInteger leftIndex= (centerIndex == 0)?((countOfItems-1)):(centerIndex-1);
+        NSInteger rightIndex= (centerIndex == countOfItems-1)?(0):(centerIndex+1)%(countOfItems);
+        _pageControl.currentPage = centerIndex;
+        _leftImageView.image = [_bannerManager itemAtIndex:leftIndex].itemImg;
+        _centerImageView.image = [_bannerManager itemAtIndex:centerIndex].itemImg;
+        _rightImageView.image = [_bannerManager itemAtIndex:rightIndex].itemImg;
+    } else {
+        [_pageControl setNumberOfPages:0];
+        _centerImageIndex = 0;
+        _pageControl.currentPage = 0;
+        _leftImageView.image = nil;
+        _centerImageView.image = nil;
+        _rightImageView.image = nil;
+        [self pauseTimer];
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -281,6 +297,9 @@
 }
 
 - (void)didTapOnBanner:(UITapGestureRecognizer *)reg {
+    if (_bannerManager.countOfItems == 0) {
+        return;
+    }
     YPBannerItem *currentItem = [_bannerManager itemAtIndex:_centerImageIndex];
     if (_delegate && [_delegate respondsToSelector:@selector(didTapOnBannerItem:)]) {
         [_delegate didTapOnBannerItem:currentItem];

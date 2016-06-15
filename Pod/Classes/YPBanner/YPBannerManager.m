@@ -30,6 +30,9 @@
 }
 
 - (void)addItems:(NSArray<YPBannerItem *> *)itemArray {
+    if (!itemArray || (itemArray.count == 0)) {
+        return;
+    }
     [itemArray enumerateObjectsUsingBlock:^(YPBannerItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self addItem:obj];
     }];
