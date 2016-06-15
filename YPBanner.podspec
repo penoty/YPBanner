@@ -28,9 +28,9 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes/YPBanner/*'
-  s.resource_bundles = {
-    'YPBanner' => ['Pod/Assets/images/*']
-  }
+#  s.resource_bundles = {
+#    'YPBanner' => ['Pod/Assets/images/*']
+#  }
 
   s.public_header_files = 'Pod/Classes/YPBanner/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
