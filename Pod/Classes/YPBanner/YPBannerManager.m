@@ -53,7 +53,7 @@
     }
     //下载图片,内存缓存策略
     if (item.itemImgUrl) {
-        [_imageManager downloadImageWithURL:[NSURL URLWithString:item.itemImgUrl] options:SDWebImageCacheMemoryOnly progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [_imageManager downloadImageWithURL:[NSURL URLWithString:item.itemImgUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (image) {

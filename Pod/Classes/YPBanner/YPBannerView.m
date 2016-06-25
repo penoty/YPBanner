@@ -217,6 +217,11 @@
     [_bannerTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:_scrollTimeInterval]];
 }
 
+- (void)stopTimer {
+    [_bannerTimer invalidate];
+    _bannerTimer = nil;
+}
+
 - (void)timeUp {
     [self didSwipeOnBanner:_leftSwipe];
 }

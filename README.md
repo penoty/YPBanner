@@ -39,6 +39,8 @@ SDWebImage
 ###YPBannerViewDelegate
         //If you want to have tap callback,just implement the YPBannerViewDelegate method:
         - (void)didTapOnBannerItem:(YPBannerItem *)item;
+###NOTICE
+        You should call stopTimer in the controller's dealloc method,or the YPBannerView will not dealloc
 ###Public Properties
 #####scrollTimeInterval
         (type:CGFloat)time interval that banner automatically scroll

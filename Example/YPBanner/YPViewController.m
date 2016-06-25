@@ -27,6 +27,10 @@
     [self initFuncBtns];
 }
 
+- (void)dealloc {
+    [_bannerView stopTimer];
+}
+
 - (void)initBannerViewWithFrame {
     CGRect frame = self.view.bounds;
     YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:PLACEHOLDER data:nil];

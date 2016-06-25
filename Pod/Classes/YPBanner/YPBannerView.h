@@ -49,4 +49,13 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
 - (void)setAnimationType:(YPBannerAnimationType)animationType andAnimationDuration:(NSTimeInterval)animationDuration;
+
+/**
+ *  @author yupao, 16-06-25
+ *
+ *  NOTICE:you should call the method in the controller's dealloc method
+ *
+ *  @since 0.5.1
+ */
+- (void)stopTimer;
 @end
