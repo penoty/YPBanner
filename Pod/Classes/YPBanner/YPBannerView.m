@@ -220,6 +220,7 @@
 - (void)stopTimer {
     [_bannerTimer invalidate];
     _bannerTimer = nil;
+    [_bannerManager setDelegate:nil];
 }
 
 - (void)timeUp {
@@ -283,7 +284,7 @@
         _centerImageIndex = (_centerImageIndex == countOfItems)? 0: (_centerImageIndex+1)%countOfItems;
         if (_bannerAnimation) {
             _bannerAnimation.subtype = kCATransitionFromRight;
-            [self.layer addAnimation:_bannerAnimation forKey:nil];
+            [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
         }
         [_bannerView setContentOffset:RIGHT_IMAGE_ORGIN animated:NO];
     }
@@ -291,7 +292,7 @@
         _centerImageIndex = (_centerImageIndex == 0)?(countOfItems -1):(_centerImageIndex-1)%countOfItems;
         if (_bannerAnimation) {
             _bannerAnimation.subtype = kCATransitionFromLeft;
-            [self.layer addAnimation:_bannerAnimation forKey:nil];
+            [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
         }
         [_bannerView setContentOffset:LEFT_IMAGE_ORGIN animated:NO];
     }
