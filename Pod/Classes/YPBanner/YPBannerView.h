@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "YPBannerManager.h"
+#import "objc/runtime.h"
+#import "objc/message.h"
 
 typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
     YPBannerAnimationTypeFade = 0,
@@ -50,12 +52,4 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
 - (void)setPageIndicatorColor:(UIColor *)indicatorColor andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
 - (void)setAnimationType:(YPBannerAnimationType)animationType andAnimationDuration:(NSTimeInterval)animationDuration;
 
-/**
- *  @author yupao, 16-06-25
- *
- *  NOTICE:you should call the method in the controller's dealloc method
- *
- *  @since 0.5.1
- */
-- (void)stopTimer;
 @end

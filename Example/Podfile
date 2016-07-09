@@ -8,7 +8,7 @@ use_frameworks!
 target 'YPBanner_Example' do
   pod 'YPBanner', :path => '../'
   pod 'SDWebImage', '~> 3.8.1'
-  pod 'Masonry'
+  pod 'Masonry', '~> 0.6.4'
 end
 
 target 'YPBanner_Tests' do

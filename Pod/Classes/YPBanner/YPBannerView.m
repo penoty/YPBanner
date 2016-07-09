@@ -14,6 +14,13 @@
 #define RIGHT_IMAGE_ORGIN CGPointMake(VIEW_WIDTH*2, 0)
 #define TIMERINTERVAL 5.0f
 
+#define UIViewParentController(__view) ({ \
+UIResponder *__responder = __view; \
+while ([__responder isKindOfClass:[UIView class]]) \
+__responder = [__responder nextResponder]; \
+(UIViewController *)__responder; \
+})
+
 @interface YPBannerView(){
     NSArray *animationTypeArray;
 }
@@ -118,6 +125,43 @@
     [self addBannerItems:itemArray];
 }
 
+- (void)dealloc {
+    _bannerTimer = nil;
+    [_bannerManager setDelegate:nil];
+}
+
+#pragma mark - hook the dealloc of superview's controller
+- (void)didMoveToSuperview {
+    id superView = self.superview;
+    if (superView) {
+        //obtain the controller of superview
+        __weak id controller = UIViewParentController(superView);
+        if (controller) {
+            //obtain weak point of self
+            objc_setAssociatedObject(controller, "weakBannerView", self, OBJC_ASSOCIATION_ASSIGN);
+            //do the hook
+            Method originDealloc = class_getInstanceMethod([controller class], NSSelectorFromString(@"dealloc"));
+            IMP originDeallocIMP = method_getImplementation(originDealloc);
+            void (^implementingBlock)(id viewController, SEL deallocSel) = ^(id viewController, SEL deallocSel) {
+                // hooked, invalidate nstimer to break the retain cycle
+                YPBannerView *weakBannerView = objc_getAssociatedObject(viewController, "weakBannerView");
+                if (weakBannerView) {
+                    [weakBannerView stopTimer];
+                }
+                //call swizzledDealloc
+                SEL swizzledDeallocSEL = NSSelectorFromString(@"swizzledDealloc");
+                static void (*swizzledDealloc)(id self, SEL sel) = (void(*)(id self, SEL sel))objc_msgSend;
+                swizzledDealloc(viewController, swizzledDeallocSEL);
+            };
+            method_setImplementation(originDealloc, imp_implementationWithBlock([implementingBlock copy]));
+            BOOL addMethodResult = class_addMethod([controller class], NSSelectorFromString(@"swizzledDealloc"), originDeallocIMP, "v");
+            if (addMethodResult) {
+                NSLog(@"add method success");
+            }
+        }
+    }
+}
+
 #pragma mark - subview init methods
 - (void)initBannerView {
     _bannerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
@@ -219,8 +263,6 @@
 
 - (void)stopTimer {
     [_bannerTimer invalidate];
-    _bannerTimer = nil;
-    [_bannerManager setDelegate:nil];
 }
 
 - (void)timeUp {

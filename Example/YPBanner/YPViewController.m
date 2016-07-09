@@ -28,7 +28,7 @@
 }
 
 - (void)dealloc {
-    [_bannerView stopTimer];
+    NSLog(@"YPViewController dealloc");
 }
 
 - (void)initBannerViewWithFrame {

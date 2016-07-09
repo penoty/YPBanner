@@ -51,7 +51,7 @@
     if (_delegate && [_delegate respondsToSelector:@selector(YPBannerManager:addItem:)]) {
         [_delegate YPBannerManager:self addItem:item];
     }
-    //下载图片,内存缓存策略
+
     if (item.itemImgUrl) {
         [_imageManager downloadImageWithURL:[NSURL URLWithString:item.itemImgUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
