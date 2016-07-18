@@ -58,6 +58,9 @@
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             if (image) {
                 item.itemImg = image;
+                if (_delegate && [_delegate respondsToSelector:@selector(YPBannerManager:updateItem:)]) {
+                    [_delegate YPBannerManager:self updateItem:item];
+                }
             }
         }];
     }

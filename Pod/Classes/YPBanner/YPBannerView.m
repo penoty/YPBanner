@@ -361,6 +361,10 @@ __responder = [__responder nextResponder]; \
     _centerImageIndex = 0;
 }
 
+- (void)YPBannerManager:(YPBannerManager *)manager updateItem:(YPBannerItem *)item {
+    [self ajustImageIndex];
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

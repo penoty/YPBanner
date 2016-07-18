@@ -15,8 +15,8 @@
 @optional
 - (void)YPBannerManager:(YPBannerManager *)manager deleteItem:(YPBannerItem *)item;
 - (void)YPBannerManager:(YPBannerManager *)manager removeAllItemsWithPlaceholdItem:(BOOL)flag;
+- (void)YPBannerManager:(YPBannerManager *)manager updateItem:(YPBannerItem *)item;
 @end
-
 @interface YPBannerManager : NSObject
 @property (nonatomic, weak) id<YPBannerManagerDelegate> delegate;
 @property (nonatomic, assign) NSInteger countOfItems;
