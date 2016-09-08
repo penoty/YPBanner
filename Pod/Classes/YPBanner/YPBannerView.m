@@ -215,6 +215,8 @@ __responder = [__responder nextResponder]; \
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
     YPWeakTimerTarget *target = [YPWeakTimerTarget targetWithWeakTarget:self fireSel:@selector(timeUp)];
+    
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
                                                     target:target
                                                   selector:@selector(timerDidFire:)
