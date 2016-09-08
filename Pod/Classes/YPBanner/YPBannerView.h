@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "YPBannerManager.h"
-#import "objc/runtime.h"
-#import "objc/message.h"
+#import "YPWeakTimerTarget.h"
 
 typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
     YPBannerAnimationTypeFade = 0,

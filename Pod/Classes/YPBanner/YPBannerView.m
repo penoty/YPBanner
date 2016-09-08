@@ -126,40 +126,8 @@ __responder = [__responder nextResponder]; \
 }
 
 - (void)dealloc {
-    _bannerTimer = nil;
+    [_bannerTimer invalidate];
     [_bannerManager setDelegate:nil];
-}
-
-#pragma mark - hook the dealloc of superview's controller
-- (void)didMoveToSuperview {
-    id superView = self.superview;
-    if (superView) {
-        //obtain the controller of superview
-        __weak id controller = UIViewParentController(superView);
-        if (controller) {
-            //obtain weak point of self
-            objc_setAssociatedObject(controller, "weakBannerView", self, OBJC_ASSOCIATION_ASSIGN);
-            //do the hook
-            Method originDealloc = class_getInstanceMethod([controller class], NSSelectorFromString(@"dealloc"));
-            IMP originDeallocIMP = method_getImplementation(originDealloc);
-            void (^implementingBlock)(id viewController, SEL deallocSel) = ^(id viewController, SEL deallocSel) {
-                // hooked, invalidate nstimer to break the retain cycle
-                YPBannerView *weakBannerView = objc_getAssociatedObject(viewController, "weakBannerView");
-                if (weakBannerView) {
-                    [weakBannerView stopTimer];
-                }
-                //call swizzledDealloc
-                SEL swizzledDeallocSEL = NSSelectorFromString(@"swizzledDealloc");
-                static void (*swizzledDealloc)(id self, SEL sel) = (void(*)(id self, SEL sel))objc_msgSend;
-                swizzledDealloc(viewController, swizzledDeallocSEL);
-            };
-            method_setImplementation(originDealloc, imp_implementationWithBlock([implementingBlock copy]));
-            BOOL addMethodResult = class_addMethod([controller class], NSSelectorFromString(@"swizzledDealloc"), originDeallocIMP, "v");
-            if (addMethodResult) {
-                NSLog(@"add method success");
-            }
-        }
-    }
 }
 
 #pragma mark - subview init methods
@@ -246,9 +214,10 @@ __responder = [__responder nextResponder]; \
 }
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
+    YPWeakTimerTarget *target = [YPWeakTimerTarget targetWithWeakTarget:self fireSel:@selector(timeUp)];
     _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
-                                                    target:self
-                                                  selector:@selector(timeUp)
+                                                    target:target
+                                                  selector:@selector(timerDidFire:)
                                                   userInfo:nil
                                                    repeats:YES];
 }
