@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "YPBanner"
-  s.version          = "0.8.0"
+  s.version          = "0.9.0"
   s.summary          = "YPBanner,simple usage,esily add banner to your project."
 
 # This description is used to generate tags and improve search results.

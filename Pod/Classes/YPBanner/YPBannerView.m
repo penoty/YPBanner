@@ -39,8 +39,8 @@ __responder = [__responder nextResponder]; \
 @property (nonatomic, strong) CATransition *bannerAnimation;
 @end
 @implementation YPBannerView
-#pragma mark - init methods
 
+#pragma mark - init methods
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -116,7 +116,6 @@ __responder = [__responder nextResponder]; \
 
 - (void)addBannerItems:(NSArray<YPBannerItem *> *)itemArray {
     [_bannerManager addItems:itemArray];
-    [self ajustImageIndex];
     [self resumeTimer];
 }
 
@@ -165,7 +164,7 @@ __responder = [__responder nextResponder]; \
     [_gestureView addGestureRecognizer:_leftSwipe];
     [_gestureView addGestureRecognizer:_rightSwipe];
     [_gestureView addGestureRecognizer:_onceTap];
-
+    
     [self addSubview:_gestureView];
     [self bringSubviewToFront:_gestureView];
 }
@@ -212,10 +211,26 @@ __responder = [__responder nextResponder]; \
                                     timingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]
                               andAnimationDuration:animationDuration];
 }
+
+#pragma mark - move to new window callback
+- (void)willMoveToWindow:(UIWindow *)newWindow {
+    [super willMoveToWindow:newWindow];
+    if (newWindow == (id)[NSNull null] || newWindow == nil) {
+        [self pauseTimer];
+    }
+    else {
+        [self resumeTimer];
+    }
+}
+
+#pragma mark - scrollview delegate,keep the scroll view on center
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [scrollView setContentOffset:CENTER_IMAGE_ORGIN];
+}
+
 #pragma mark - NSTimer related
 - (void)initBannerTimer {
     YPWeakTimerTarget *target = [YPWeakTimerTarget targetWithWeakTarget:self fireSel:@selector(timeUp)];
-    
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     _bannerTimer = [NSTimer scheduledTimerWithTimeInterval:_scrollTimeInterval
                                                     target:target
@@ -259,6 +274,7 @@ __responder = [__responder nextResponder]; \
         _rightImageView.image = nil;
         [self pauseTimer];
     }
+    [_bannerView setContentOffset:CENTER_IMAGE_ORGIN];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -294,12 +310,11 @@ __responder = [__responder nextResponder]; \
 - (void)didSwipeOnBanner:(UISwipeGestureRecognizer *)reg {
     NSInteger countOfItems = _bannerManager.countOfItems;
     if (reg.direction == UISwipeGestureRecognizerDirectionLeft) {//scroll to right direction
-        _centerImageIndex = (_centerImageIndex == countOfItems)? 0: (_centerImageIndex+1)%countOfItems;
+        _centerImageIndex = (_centerImageIndex == (countOfItems - 1))? 0: (_centerImageIndex+1)%countOfItems;
         if (_bannerAnimation) {
             _bannerAnimation.subtype = kCATransitionFromRight;
             [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
         }
-        [_bannerView setContentOffset:RIGHT_IMAGE_ORGIN animated:NO];
     }
     if (reg.direction == UISwipeGestureRecognizerDirectionRight) {//scroll to left direction
         _centerImageIndex = (_centerImageIndex == 0)?(countOfItems -1):(_centerImageIndex-1)%countOfItems;
@@ -307,11 +322,8 @@ __responder = [__responder nextResponder]; \
             _bannerAnimation.subtype = kCATransitionFromLeft;
             [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
         }
-        [_bannerView setContentOffset:LEFT_IMAGE_ORGIN animated:NO];
     }
     [self ajustImageIndex];
-    _pageControl.currentPage = _centerImageIndex;
-    [_bannerView setContentOffset:CENTER_IMAGE_ORGIN];
     [self resumeTimer];
 }
 
@@ -337,11 +349,11 @@ __responder = [__responder nextResponder]; \
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end
