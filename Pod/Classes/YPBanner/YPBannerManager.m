@@ -30,18 +30,15 @@
 }
 
 - (void)addItems:(NSArray<YPBannerItem *> *)itemArray {
-    if (!itemArray || (itemArray.count == 0)) {
-        return;
+    if (itemArray && (itemArray.count > 0)) {
+        for (YPBannerItem *item in itemArray) {
+            [self addItem:item];
+        }
     }
-    [itemArray enumerateObjectsUsingBlock:^(YPBannerItem * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self addItem:obj];
-    }];
 }
 
 - (void)addItem:(YPBannerItem *)item {
-    if (!item) {
-        return;
-    }
+    if (!item) { return; }
     if (!_imageManager) {
         _imageManager = [SDWebImageManager sharedManager];
     }
@@ -67,9 +64,7 @@
 }
 
 - (void)deleteItem:(YPBannerItem *)item {
-    if (!item) {
-        return;
-    }
+    if (!item) { return; }
     NSInteger itemIndex = [_itemQueue indexOfObject:item];
     if ((itemIndex >= 0) && (itemIndex < _itemQueue.count)) {
         [_itemQueue removeObject:item];

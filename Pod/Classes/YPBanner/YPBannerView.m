@@ -120,8 +120,10 @@ __responder = [__responder nextResponder]; \
 }
 
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray {
-    [_bannerManager removeAllItemsWithPlaceholderItem:NO];
-    [self addBannerItems:itemArray];
+    if (itemArray && (itemArray.count > 0)) {
+        [_bannerManager removeAllItemsWithPlaceholderItem:NO];
+        [self addBannerItems:itemArray];
+    }
 }
 
 - (void)dealloc {
@@ -184,7 +186,7 @@ __responder = [__responder nextResponder]; \
     [_rightImageView setFrame:CGRectMake(RIGHT_IMAGE_ORGIN.x, RIGHT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
     [_gestureView setFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
     [_pageControl setFrame:CGRectMake(VIEW_WIDTH/2.0f-20, VIEW_HEIGHT-20.f, 40, 20)];
-    [self ajustImageIndex];
+    [self adjustImageIndex];
 }
 
 #pragma mark - setter and getter
@@ -255,7 +257,7 @@ __responder = [__responder nextResponder]; \
     [self didSwipeOnBanner:_leftSwipe];
 }
 
-- (void)ajustImageIndex {
+- (void)adjustImageIndex {
     NSInteger countOfItems = _bannerManager.countOfItems;
     if (countOfItems > 0) {
         NSInteger centerIndex= _centerImageIndex;
@@ -323,7 +325,7 @@ __responder = [__responder nextResponder]; \
             [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
         }
     }
-    [self ajustImageIndex];
+    [self adjustImageIndex];
     [self resumeTimer];
 }
 
@@ -345,7 +347,7 @@ __responder = [__responder nextResponder]; \
 }
 
 - (void)YPBannerManager:(YPBannerManager *)manager updateItem:(YPBannerItem *)item {
-    [self ajustImageIndex];
+    [self adjustImageIndex];
 }
 
 /*
