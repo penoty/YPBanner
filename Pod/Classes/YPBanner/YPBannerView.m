@@ -311,28 +311,30 @@ __responder = [__responder nextResponder]; \
 #pragma mark - uiswipegesture
 - (void)didSwipeOnBanner:(UISwipeGestureRecognizer *)reg {
     NSInteger countOfItems = _bannerManager.countOfItems;
-    if (reg.direction == UISwipeGestureRecognizerDirectionLeft) {//scroll to right direction
-        _centerImageIndex = (_centerImageIndex == (countOfItems - 1))? 0: (_centerImageIndex+1)%countOfItems;
-        if (_bannerAnimation) {
-            _bannerAnimation.subtype = kCATransitionFromRight;
-            [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
+    if (countOfItems > 0) {
+        if (reg.direction == UISwipeGestureRecognizerDirectionLeft) {//scroll to right direction
+            _centerImageIndex = (_centerImageIndex == (countOfItems - 1))? 0: (_centerImageIndex+1)%countOfItems;
+            if (_bannerAnimation) {
+                _bannerAnimation.subtype = kCATransitionFromRight;
+                [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
+            }
         }
-    }
-    if (reg.direction == UISwipeGestureRecognizerDirectionRight) {//scroll to left direction
-        _centerImageIndex = (_centerImageIndex == 0)?(countOfItems -1):(_centerImageIndex-1)%countOfItems;
-        if (_bannerAnimation) {
-            _bannerAnimation.subtype = kCATransitionFromLeft;
-            [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
+        if (reg.direction == UISwipeGestureRecognizerDirectionRight) {//scroll to left direction
+            _centerImageIndex = (_centerImageIndex == 0)?(countOfItems -1):(_centerImageIndex-1)%countOfItems;
+            if (_bannerAnimation) {
+                _bannerAnimation.subtype = kCATransitionFromLeft;
+                [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
+            }
         }
+        [self adjustImageIndex];
+        [self resumeTimer];
+    } else {
+        [self stopTimer];
     }
-    [self adjustImageIndex];
-    [self resumeTimer];
 }
 
 - (void)didTapOnBanner:(UITapGestureRecognizer *)reg {
-    if (_bannerManager.countOfItems == 0) {
-        return;
-    }
+    if (_bannerManager.countOfItems == 0) return;
     YPBannerItem *currentItem = [_bannerManager itemAtIndex:_centerImageIndex];
     if (_delegate && [_delegate respondsToSelector:@selector(didTapOnBannerItem:)]) {
         [_delegate didTapOnBannerItem:currentItem];
