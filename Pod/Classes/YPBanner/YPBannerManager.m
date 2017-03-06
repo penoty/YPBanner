@@ -49,7 +49,7 @@
         [_delegate YPBannerManager:self addItem:item];
     }
 
-    if (item.itemImgUrl) {
+    if (item.itemImgUrl && ![item.itemImgUrl isKindOfClass:[NSNull class]]) {
         [_imageManager downloadImageWithURL:[NSURL URLWithString:item.itemImgUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {

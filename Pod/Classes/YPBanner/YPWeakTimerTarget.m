@@ -16,7 +16,7 @@
 @implementation YPWeakTimerTarget
 
 + (instancetype)targetWithWeakTarget:(id)target fireSel:(SEL)sel {
-    id timerTarget = [[YPWeakTimerTarget alloc] init];
+    id timerTarget = [[[self class] alloc] init];
     [timerTarget setFireTarget:target];
     [timerTarget setFireSel:sel];
     return timerTarget;
