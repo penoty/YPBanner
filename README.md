@@ -4,27 +4,27 @@ Just a few lines of code, you can easily add banner to your app.
 ![image](https://github.com/penoty/YPBanner/blob/master/banner_gif1.gif )
 ![image](https://github.com/penoty/YPBanner/blob/master/banner_gif2.gif ) 
 
-##Dependency
+## Dependency
 SDWebImage
-##How to install?
+## How to install?
         //support pod install,just do:
         pod 'YPBanner' 
         //if the repo is not updated,please try:
         pod "YPBanner", :git =>"https://github.com/penoty/YPBanner"
-##How to use?(need import "YPBannerView.h")
-###Banner Item Init
+## How to use?(need import "YPBannerView.h")
+### Banner Item Init
         YPBannerItem *item_01 = [[YPBannerItem alloc] initWithImage:[UIImage imageNamed:@"placehold.png"] data:nil];
         YPBannerItem *item_02 = [[YPBannerItem alloc] initWithUrl:@"web_url" 
                                                              data:nil 
                                                    andPlaceholder:[UIImage imageNamed:@"placehold.png"]];
         ......
-###Default Animation
+### Default Animation
         _bannerView = [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02...]];     
-###Set animation type and duration
+### Set animation type and duration
         _bannerView= [[YPBannerView alloc] initWithYPBannerItems:@[item_01,item_02...] 
                                                    animationType:YPBannerAnimationTypeCube 
                                             andAnimationDuration:1.5f];
-###Setup Frame
+### Setup Frame
         //you can setup frame any where you want by using setFrame or masonry
         //use setFrame:
         [_bannerView setFrame:...];
@@ -32,7 +32,7 @@ SDWebImage
         [_bannerView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make...
          }];
-###Setup frame when init
+### Setup frame when init
         - (instancetype)initWithFrame:(CGRect)frame
                      andYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
         - (instancetype)initWithFrame:(CGRect)frame
@@ -40,22 +40,22 @@ SDWebImage
                         animationType:(YPBannerAnimationType)type
                  andAnimationDuration:(NSTimeInterval)duration;
 
-###YPBannerViewDelegate
+### YPBannerViewDelegate
         //If you want to have tap callback,just implement the YPBannerViewDelegate method:
         - (void)didTapOnBannerItem:(YPBannerItem *)item;
-###Public Properties
-#####scrollTimeInterval
+### Public Properties
+##### scrollTimeInterval
         (type:CGFloat)time interval that banner automatically scroll
-#####placeholderImg
+##### placeholderImg
         (type:UIImage *)the banner placeholder image 
-#####pageIndicatorTintColor
+##### pageIndicatorTintColor
         (type:UIColor)pagecontrol's indicator color
-#####currentPageIndicatorColor
+##### currentPageIndicatorColor
         (type:UIColor)pagecontrol's current indicator color
-#####using the method to setup the pagecontrol
+##### using the method to setup the pagecontrol
         - (void)setPageIndicatorColor:(UIColor *)indicatorColor 
          andCurrentPageIndicatorColor:(UIColor *)currentIndicatorColor;
-#####using the method to setup animation type and duration
+##### using the method to setup animation type and duration
         - (void)setAnimationType:(YPBannerAnimationType)animationType
          andAnimationDuration:(NSTimeInterval)animationDuration;
 ## Author
