@@ -3,6 +3,7 @@ Just a few lines of code, you can easily add banner to your app.
 
 ![image](https://github.com/penoty/YPBanner/blob/master/banner_gif1.gif )
 ![image](https://github.com/penoty/YPBanner/blob/master/banner_gif2.gif ) 
+
 ##Dependency
 SDWebImage
 ##How to install?
