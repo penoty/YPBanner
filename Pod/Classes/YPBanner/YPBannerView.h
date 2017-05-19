@@ -33,6 +33,7 @@ typedef NS_OPTIONS(NSInteger, YPBannerAnimationType) {
 @property (nonatomic, strong) UIImage *placeholderImg;
 @property (nonatomic, strong) UIColor *pageIndicatorTintColor;
 @property (nonatomic, strong) UIColor *currentPageIndicatorColor;
+@property (nonatomic, assign) BOOL indicatorHidden;
 //init methods without initFrame
 - (instancetype)initWithYPBannerItems:(NSArray<YPBannerItem *> *)itemArray;
 - (instancetype)initWithYPBannerItems:(NSArray<YPBannerItem *> *)itemArray

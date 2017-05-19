@@ -7,33 +7,19 @@
 //
 
 #import "YPBannerView.h"
-#define VIEW_WIDTH self.bounds.size.width
-#define VIEW_HEIGHT self.bounds.size.height
-#define LEFT_IMAGE_ORGIN CGPointMake(VIEW_WIDTH*0, 0)
-#define CENTER_IMAGE_ORGIN CGPointMake(VIEW_WIDTH*1, 0)
-#define RIGHT_IMAGE_ORGIN CGPointMake(VIEW_WIDTH*2, 0)
-#define TIMERINTERVAL 5.0f
 
-#define UIViewParentController(__view) ({ \
-UIResponder *__responder = __view; \
-while ([__responder isKindOfClass:[UIView class]]) \
-__responder = [__responder nextResponder]; \
-(UIViewController *)__responder; \
-})
+static const NSTimeInterval DefaultTimeInterval = 5.0f;
 
 @interface YPBannerView(){
     NSArray *animationTypeArray;
 }
 @property (nonatomic, strong) UIPageControl *pageControl;
-@property (nonatomic, strong) UIScrollView *bannerView;
 @property (nonatomic, strong) UIView *gestureView;
-@property (nonatomic, strong) UIImageView *leftImageView;
-@property (nonatomic, strong) UIImageView *centerImageView;
-@property (nonatomic, strong) UIImageView *rightImageView;
+@property (nonatomic, strong) UIImageView *bannerView;
 @property (nonatomic, strong) UISwipeGestureRecognizer *leftSwipe;
 @property (nonatomic, strong) UISwipeGestureRecognizer *rightSwipe;
 @property (nonatomic, strong) UITapGestureRecognizer *onceTap;
-@property (nonatomic, assign) NSInteger centerImageIndex;
+@property (nonatomic, assign) NSInteger bannerIndex;
 @property (nonatomic, strong) YPBannerManager *bannerManager;
 @property (nonatomic, strong) NSTimer *bannerTimer;
 @property (nonatomic, strong) CATransition *bannerAnimation;
@@ -44,10 +30,10 @@ __responder = [__responder nextResponder]; \
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        animationTypeArray = @[kCATransitionFade,kCATransitionMoveIn,kCATransitionPush,kCATransitionReveal  //公开动画
-                               ,@"cube",@"oglFlip",@"suckEffect",@"rippleEffect",@"pageCurl",@"pageUnCurl"  //私有动画
+        animationTypeArray = @[kCATransitionFade,kCATransitionMoveIn,kCATransitionPush,kCATransitionReveal  //public
+                               ,@"cube",@"oglFlip",@"suckEffect",@"rippleEffect",@"pageCurl",@"pageUnCurl"  //private
                                ];
-        _scrollTimeInterval = TIMERINTERVAL;
+        _scrollTimeInterval = DefaultTimeInterval;
         if (!_bannerManager) {
             _bannerManager = [[YPBannerManager alloc] init];
             [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
@@ -68,7 +54,7 @@ __responder = [__responder nextResponder]; \
             [_bannerManager setDelegate:(id<YPBannerManagerDelegate> _Nullable)self];
         }
         [_bannerManager addItems:(NSArray<YPBannerItem *> *)itemArray];
-        _centerImageIndex = 0;
+        _bannerIndex = 0;
         _bannerAnimation = [self createDefaultAnimation];
     }
     return self;
@@ -93,7 +79,7 @@ __responder = [__responder nextResponder]; \
     self = [self initWithFrame:frame];
     if (self) {
         [_bannerManager addItems:(NSArray<YPBannerItem *> *)itemArray];
-        _centerImageIndex = 0;
+        _bannerIndex = 0;
         _bannerAnimation = [self createDefaultAnimation];
     }
     return self;
@@ -120,10 +106,8 @@ __responder = [__responder nextResponder]; \
 }
 
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray {
-    if (itemArray && (itemArray.count > 0)) {
-        [_bannerManager removeAllItemsWithPlaceholderItem:NO];
-        [self addBannerItems:itemArray];
-    }
+    [_bannerManager removeAllItemsWithPlaceholderItem:NO];
+    [self addBannerItems:itemArray];
 }
 
 - (void)dealloc {
@@ -133,28 +117,12 @@ __responder = [__responder nextResponder]; \
 
 #pragma mark - subview init methods
 - (void)initBannerView {
-    _bannerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_bannerView setBounces:NO];
-    [_bannerView setShowsHorizontalScrollIndicator:NO];
-    [_bannerView setShowsVerticalScrollIndicator:NO];
-    [_bannerView setPagingEnabled:YES];
-    [_bannerView setContentOffset:CENTER_IMAGE_ORGIN];
-    [_bannerView setContentSize:CGSizeMake(VIEW_WIDTH*3.0f, VIEW_HEIGHT)];
-    [_bannerView setDelegate:(id<UIScrollViewDelegate> _Nullable)self];
-    [_bannerView setOpaque:YES];
+    _bannerView = [[UIImageView alloc] initWithFrame:self.bounds];
     [self addSubview:_bannerView];
-    [self bringSubviewToFront:_bannerView];
-    
-    _leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(LEFT_IMAGE_ORGIN.x, LEFT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
-    _centerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CENTER_IMAGE_ORGIN.x, CENTER_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
-    _rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(RIGHT_IMAGE_ORGIN.x, RIGHT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_bannerView addSubview:_leftImageView];
-    [_bannerView addSubview:_centerImageView];
-    [_bannerView addSubview:_rightImageView];
 }
 
 - (void)initGestureView {
-    _gestureView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
+    _gestureView = [[UIView alloc] initWithFrame:self.bounds];
     [_gestureView setUserInteractionEnabled:YES];
     [_gestureView setBackgroundColor:[UIColor clearColor]];
     [_gestureView setOpaque:NO];
@@ -172,7 +140,7 @@ __responder = [__responder nextResponder]; \
 }
 
 - (void)initPageControl {
-    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(VIEW_WIDTH/2.0f-20, VIEW_HEIGHT-20.f, 40, 20)];
+    _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(self.bounds.size.width/2.0f-20, self.bounds.size.height-20.f, 40, 20)];
     [_pageControl setNumberOfPages:[_bannerManager countOfItems]];
     [self addSubview:_pageControl];
     [self bringSubviewToFront:_pageControl];
@@ -180,16 +148,14 @@ __responder = [__responder nextResponder]; \
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [_bannerView setFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_leftImageView setFrame:CGRectMake(LEFT_IMAGE_ORGIN.x, LEFT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_centerImageView setFrame:CGRectMake(CENTER_IMAGE_ORGIN.x, CENTER_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_rightImageView setFrame:CGRectMake(RIGHT_IMAGE_ORGIN.x, RIGHT_IMAGE_ORGIN.y, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_gestureView setFrame:CGRectMake(0, 0, VIEW_WIDTH, VIEW_HEIGHT)];
-    [_pageControl setFrame:CGRectMake(VIEW_WIDTH/2.0f-20, VIEW_HEIGHT-20.f, 40, 20)];
+    [_bannerView setFrame:self.bounds];
+    [_gestureView setFrame:self.bounds];
+    [_pageControl setFrame:CGRectMake(self.bounds.size.width/2.0f-20, self.bounds.size.height-20.f, 40, 20)];
     [self adjustImageIndex];
 }
 
 #pragma mark - setter and getter
+
 - (void)setPlaceholderImg:(UIImage *)placeholderImg {
     _placeholderImg = placeholderImg;
     [_bannerManager setPlaceholderImg:placeholderImg];
@@ -214,6 +180,11 @@ __responder = [__responder nextResponder]; \
                               andAnimationDuration:animationDuration];
 }
 
+- (void)setIndicatorHidden:(BOOL)indicatorHidden {
+    _indicatorHidden = indicatorHidden;
+    [_pageControl setHidden:_indicatorHidden];
+}
+
 #pragma mark - move to new window callback
 - (void)willMoveToWindow:(UIWindow *)newWindow {
     [super willMoveToWindow:newWindow];
@@ -223,11 +194,6 @@ __responder = [__responder nextResponder]; \
     else {
         [self resumeTimer];
     }
-}
-
-#pragma mark - scrollview delegate,keep the scroll view on center
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [scrollView setContentOffset:CENTER_IMAGE_ORGIN];
 }
 
 #pragma mark - NSTimer related
@@ -260,23 +226,16 @@ __responder = [__responder nextResponder]; \
 - (void)adjustImageIndex {
     NSInteger countOfItems = _bannerManager.countOfItems;
     if (countOfItems > 0) {
-        NSInteger centerIndex= _centerImageIndex;
-        NSInteger leftIndex= (centerIndex == 0)?((countOfItems-1)):(centerIndex-1);
-        NSInteger rightIndex= (centerIndex == countOfItems-1)?(0):(centerIndex+1)%(countOfItems);
+        NSInteger centerIndex= _bannerIndex;
         _pageControl.currentPage = centerIndex;
-        _leftImageView.image = [_bannerManager itemAtIndex:leftIndex].itemImg;
-        _centerImageView.image = [_bannerManager itemAtIndex:centerIndex].itemImg;
-        _rightImageView.image = [_bannerManager itemAtIndex:rightIndex].itemImg;
+        _bannerView.image = [_bannerManager itemAtIndex:centerIndex].itemImg;
     } else {
         [_pageControl setNumberOfPages:0];
-        _centerImageIndex = 0;
+        _bannerIndex = 0;
         _pageControl.currentPage = 0;
-        _leftImageView.image = nil;
-        _centerImageView.image = nil;
-        _rightImageView.image = nil;
+        _bannerView.image = nil;
         [self pauseTimer];
     }
-    [_bannerView setContentOffset:CENTER_IMAGE_ORGIN];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -313,14 +272,14 @@ __responder = [__responder nextResponder]; \
     NSInteger countOfItems = _bannerManager.countOfItems;
     if (countOfItems > 0) {
         if (reg.direction == UISwipeGestureRecognizerDirectionLeft) {//scroll to right direction
-            _centerImageIndex = (_centerImageIndex == (countOfItems - 1))? 0: (_centerImageIndex+1)%countOfItems;
+            _bannerIndex = (_bannerIndex == (countOfItems - 1))? 0: (_bannerIndex+1)%countOfItems;
             if (_bannerAnimation) {
                 _bannerAnimation.subtype = kCATransitionFromRight;
                 [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
             }
         }
         if (reg.direction == UISwipeGestureRecognizerDirectionRight) {//scroll to left direction
-            _centerImageIndex = (_centerImageIndex == 0)?(countOfItems -1):(_centerImageIndex-1)%countOfItems;
+            _bannerIndex = (_bannerIndex == 0)?(countOfItems -1):(_bannerIndex-1)%countOfItems;
             if (_bannerAnimation) {
                 _bannerAnimation.subtype = kCATransitionFromLeft;
                 [_bannerView.layer addAnimation:_bannerAnimation forKey:nil];
@@ -335,7 +294,7 @@ __responder = [__responder nextResponder]; \
 
 - (void)didTapOnBanner:(UITapGestureRecognizer *)reg {
     if (_bannerManager.countOfItems == 0) return;
-    YPBannerItem *currentItem = [_bannerManager itemAtIndex:_centerImageIndex];
+    YPBannerItem *currentItem = [_bannerManager itemAtIndex:_bannerIndex];
     if (_delegate && [_delegate respondsToSelector:@selector(didTapOnBannerItem:)]) {
         [_delegate didTapOnBannerItem:currentItem];
     }
@@ -345,7 +304,7 @@ __responder = [__responder nextResponder]; \
 #pragma mark -YPBannerManagerDelegate
 - (void)YPBannerManager:(YPBannerManager *)manager addItem:(YPBannerItem *)item {
     [_pageControl setNumberOfPages:manager.countOfItems];
-    _centerImageIndex = 0;
+    _bannerIndex = 0;
 }
 
 - (void)YPBannerManager:(YPBannerManager *)manager updateItem:(YPBannerItem *)item {
