@@ -106,8 +106,10 @@ static const NSTimeInterval DefaultTimeInterval = 5.0f;
 }
 
 - (void)resetBannerItems:(NSArray<YPBannerItem *> *)itemArray {
-    [_bannerManager removeAllItemsWithPlaceholderItem:NO];
-    [self addBannerItems:itemArray];
+    if (itemArray && (itemArray.count > 0)) {
+        [_bannerManager removeAllItemsWithPlaceholderItem:NO];
+        [self addBannerItems:itemArray];
+    }
 }
 
 - (void)dealloc {
@@ -190,8 +192,7 @@ static const NSTimeInterval DefaultTimeInterval = 5.0f;
     [super willMoveToWindow:newWindow];
     if (newWindow == (id)[NSNull null] || newWindow == nil) {
         [self pauseTimer];
-    }
-    else {
+    }else {
         [self resumeTimer];
     }
 }
@@ -310,13 +311,5 @@ static const NSTimeInterval DefaultTimeInterval = 5.0f;
 - (void)YPBannerManager:(YPBannerManager *)manager updateItem:(YPBannerItem *)item {
     [self adjustImageIndex];
 }
-
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
 
 @end

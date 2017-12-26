@@ -1,6 +1,6 @@
 {
   "name": "YPBanner",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "summary": "YPBanner,simple usage,esily add banner to your project.",
   "description": "Just a few lines of codes, you can easily add a banner to your project.",
   "homepage": "https://github.com/penoty/YPBanner",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/penoty/YPBanner.git",
-    "tag": "1.1.0"
+    "tag": "1.2.0"
   },
   "social_media_url": "http://twitter.com/PenotyYu",
   "platforms": {
